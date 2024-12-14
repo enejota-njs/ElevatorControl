@@ -9,7 +9,7 @@ module elevator_control (
 	output line_6, line_5, line_4, line_3, line_2, line_1, line_0, column_4, column_3, column_2, column_1, column_0,
 	output open_door, elevator_moving, door_moving);
 
-	divisor_clock (clock, frequency_1hz, frequency_4hz, frequency_64hz, frequency_05hz, frequency_8hz); // Clock Divider
+	clock_divider (clock, frequency_1hz, frequency_4hz, frequency_64hz, frequency_05hz, frequency_8hz); // Clock Divider
 	
 	// Setting the display digits ***
 	
@@ -30,14 +30,14 @@ module elevator_control (
 	debounce (frequency_64hz, increment_button, inc_but);
 	debounce (frequency_64hz, decrement_button, dec_but);
 
-	detector_borda (frequency_64hz, inc_but, inc);
-	detector_borda (frequency_64hz, dec_but, dec);
+	edge_detector (frequency_64hz, inc_but, inc);
+	edge_detector (frequency_64hz, dec_but, dec);
 
 	assign maximum_people = a2 & a1 & a0; 
-	assign minimum people = ~a2 & ~a1 & ~a0;
+	assign minimum_people = ~a2 & ~a1 & ~a0;
 	
 	assign inc_button = inc & ~maximum_people;
-	assign dec_button = dec & ~minimum people;
+	assign dec_button = dec & ~minimum_people;
 	
 	assign m = dec;
 	
@@ -48,15 +48,15 @@ module elevator_control (
 	
 	and (frequency_incdec, frequency_64hz, ~e1, ~e0);
 	
-	flip_flop_D (frequency_incdec, r2, (inc_button | dec_button), reset, a2);
-	flip_flop_D (frequency_incdec, r1, (inc_button | dec_button), reset, a1);
-	flip_flop_D (frequency_incdec, r0, (inc_button | dec_button), reset, a0);
+	flip_flop_d (frequency_incdec, r2, (inc_button | dec_button), reset, a2);
+	flip_flop_d (frequency_incdec, r1, (inc_button | dec_button), reset, a1);
+	flip_flop_d (frequency_incdec, r0, (inc_button | dec_button), reset, a0);
 
 	// **********************************************************************************
 	
 	assign elevator_moving = e1 & ~e0;
 	and (frequency_movements, frequency_1hz, e1, ~e0);
-	controle_movimentos (frequency_movements, floor3_key, floor2_key, floor1_key, floor0_key, u1, u0, l1, l0); // Floor control
+	movement_control (frequency_movements, floor3_key, floor2_key, floor1_key, floor0_key, u1, u0, l1, l0); // Floor control
 	
 	// Door control *********************************************************************************
 	

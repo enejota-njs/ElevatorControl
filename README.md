@@ -36,4 +36,4 @@ Upon reaching the exact location, the state machine switches to the Opening stat
 
 This project was developed for academic purposes, providing a valuable opportunity for learning and deepening the concepts related to digital logic, state machines and system control. During its development, it was possible to explore both theoretical and practical aspects, reinforcing essential skills and generating significant insights.
 
-We thank you for your interest in this work and hope that it can serve as a reference or inspiration for other projects. If you have questions or suggestions, feel free to contribute or get in touch.
+I appreciate your interest in this work and I hope it serves as a reference or inspiration for other projects. If you have any questions or suggestions, feel free to contribute or contact me.
